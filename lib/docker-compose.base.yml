@@ -21,3 +21,29 @@ services:
         env_file:
             - ../config/variables.env
         stop_grace_period: 60s
+        security_opt:
+            - "no-new-privileges:true"
+        cap_drop:
+            - "ALL"
+        cap_add: # Default capabilities https://github.com/moby/moby/blob/master/oci/caps/defaults.go#L6-L19
+            - "CAP_CHOWN"
+            - "CAP_DAC_OVERRIDE"
+            - "CAP_FSETID"
+            - "CAP_FOWNER"
+            - "CAP_MKNOD"
+            - "CAP_NET_RAW"
+            - "CAP_SETGID"
+            - "CAP_SETUID"
+            - "CAP_SETFCAP"
+            - "CAP_SETPCAP"
+            - "CAP_NET_BIND_SERVICE"
+            - "CAP_SYS_CHROOT"
+            - "CAP_KILL"
+            - "CAP_AUDIT_WRITE"
+        networks:
+            no_net:
+
+networks:
+    no_net:
+        internal: true
+    net:

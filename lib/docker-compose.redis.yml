@@ -1,7 +1,6 @@
 ---
 version: '2.2'
 services:
-
     redis:
         restart: always
         image: "${REDIS_IMAGE}"
@@ -10,6 +9,11 @@ services:
         container_name: redis
         expose:
             - 6379
+        read_only: true
+        security_opt:
+            - "no-new-privileges:true"
+        networks:
+            no_net:
 
     sharelatex:
       depends_on:

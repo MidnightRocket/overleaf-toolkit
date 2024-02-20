@@ -1,7 +1,6 @@
 ---
 version: '2.2'
 services:
-
     mongo:
         restart: always
         image: "${MONGO_IMAGE}"
@@ -16,6 +15,10 @@ services:
             interval: 10s
             timeout: 10s
             retries: 5
+        security_opt:
+            - "no-new-privileges:true"
+        networks:
+            no_net:
 
     sharelatex:
       depends_on:
