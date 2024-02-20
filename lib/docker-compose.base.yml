@@ -1,10 +1,11 @@
 ---
 version: '2.2'
 services:
-
     sharelatex:
-        restart: always
-        image: "${IMAGE}"
+        restart: "on-failure:5"
+        image: "midnightrocket/overleaf:full"
+        build:
+            dockerfile: "../lib/Dockerfile"
         container_name: sharelatex
         volumes:
             - "${OVERLEAF_DATA_PATH}:${OVERLEAF_IN_CONTAINER_DATA_PATH}"
