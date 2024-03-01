@@ -47,3 +47,5 @@ networks:
     no_net:
         internal: true
     net:
+        internal: false
+
