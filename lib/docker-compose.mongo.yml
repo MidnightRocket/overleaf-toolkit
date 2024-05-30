@@ -9,6 +9,7 @@ services:
         container_name: mongo
         volumes:
             - "${MONGO_DATA_PATH}:/data/db"
+            - "mongo_configs:/data/configdb"
         expose:
             - 27017
         healthcheck:
@@ -16,6 +17,10 @@ services:
             interval: 10s
             timeout: 10s
             retries: 5
+        security_opt:
+            - "no-new-privileges:true"
+        networks:
+            no_net:
 
     sharelatex:
       depends_on:
@@ -23,3 +28,6 @@ services:
           condition: service_healthy
       links:
         - mongo
+
+volumes:
+    mongo_configs:
