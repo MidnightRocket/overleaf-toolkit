@@ -1,5 +1,4 @@
 ---
-version: '2.2'
 services:
     sharelatex:
         restart: "on-failure:5"
