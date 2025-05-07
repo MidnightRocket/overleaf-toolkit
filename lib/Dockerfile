@@ -1,19 +1,16 @@
 FROM docker.io/sharelatex/sharelatex:latest
+
+
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	--mount=type=cache,target=/var/lib/apt,sharing=locked \
 	export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
 	&& apt-get -q update \
 	&& apt-get -q dist-upgrade -y \
 	&& apt-get -q --no-install-recommends install -y \
-		python3-pip \
 		inkscape \
 		lilypond \
 		xzdec \
-	&& apt-get -q autoremove -y \
-	&& pip install --no-cache-dir --upgrade pip \
-	&& pip install --no-cache-dir \
-		pygments
-		# Have to use latest version of pygments. Not available via apt
+	&& apt-get -q autoremove -y
 
 
 # https://github.com/tuetenk0pp/sharelatex-full
@@ -26,6 +23,33 @@ RUN wget "https://mirror.ctan.org/systems/texlive/tlnet/update-tlmgr-latest.sh" 
 	&& tlmgr path add \
 	&& tlmgr install scheme-full \
 	&& tlmgr path add
+
+
+
+
+
+# Have to use latest version of pygments pip. Not available via apt
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+	--mount=type=cache,target=/var/lib/apt,sharing=locked \
+	export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+	&& apt-get -q update \
+	&& apt-get -q --no-install-recommends install -y \
+		# python-full \
+		python3-venv \
+		# python3-pip \
+	&& apt-get -q autoremove -y
+
+RUN python3 -m venv /opt/venv/
+
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install --upgrade --no-cache-dir pygments
+
+
+
+
+# RUN pipx install --global --pip-args="--no-cache-dir" pygments
+
 
 # To allow minted to work properly
 # https://github.com/rigon/docker-sharelatex-full/blob/4a2d897b13646aa2ce42f8a8442b2d84815e3810/Dockerfile#L42-L44
