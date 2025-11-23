@@ -1,4 +1,5 @@
-FROM docker.io/sharelatex/sharelatex:latest
+ARG VERSION
+FROM docker.io/sharelatex/sharelatex:$VERSION
 
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
