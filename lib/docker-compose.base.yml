@@ -6,7 +6,7 @@ services:
         build:
             dockerfile: "../lib/Dockerfile"
             args:
-              VERSION: 5
+              VERSION: 6
         container_name: sharelatex
         volumes:
             - "${OVERLEAF_DATA_PATH}:${OVERLEAF_IN_CONTAINER_DATA_PATH}"
